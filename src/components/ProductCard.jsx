@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
         </div>
       )}
 
-      <h3 className="product-name">{product.name}</h3>
+      <h3 className="product-name">{product.model}</h3>
 
       <span className="price">
         <picture className="buy-product">

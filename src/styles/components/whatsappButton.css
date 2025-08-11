@@ -1,0 +1,37 @@
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    border-radius: 50%;
+    padding: 12px;
+    transition: transform 0.3s ease;
+    animation: scaleIcon 3s ease-in infinite;
+    animation-delay: 3s;
+}
+
+
+.whatsapp-button img {
+    width: 40px;
+    height: 40px;
+}
+
+
+@keyframes scaleIcon {
+    0% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.2);
+    }
+
+    20% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}

@@ -1,0 +1,151 @@
+.contact-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1200px;
+    min-height: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #222;
+    gap: 1rem;
+}
+
+.contact-title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom: 40px;
+    grid-column: 1 / -1;
+}
+
+.contact-form {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-label {
+    margin-bottom: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.contact-input {
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.contact-input:focus {
+    border-color: #000000;
+}
+
+.contact-textarea {
+    height: 100px;
+    resize: none;
+}
+
+.contact-button {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.4s ease-out;
+}
+
+.contact-button:hover {
+    color: #ccc;
+    background-color: #333;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-info h2 {
+    margin-bottom: 12px;
+}
+
+.contact-item {
+    min-height: 50px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    font-size: 16px;
+}
+
+.contact-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #333;
+    padding: 7px;
+    border-radius: 50%;
+}
+
+.contact-icon img {
+    width: 15px;
+    height: 15px;
+}
+
+
+.contact-link {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+.contact-map-container {
+    margin-top: 24px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 950px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 100px repeat(2, 1fr);
+        justify-content: center;
+    }
+
+    .contact-form {
+        width: 100%;
+        justify-self: center;
+    }
+
+    .contact-title {
+        grid-column: 1 / 1;
+    }
+
+    .contact-info h2 {
+        text-align: center;
+    }
+
+    .contact-item {
+        text-align: center;
+    }
+    .contact-item {
+    justify-content: center;
+}
+.contact-item p {
+    min-width: 120px;
+}
+}

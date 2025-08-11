@@ -1,0 +1,134 @@
+/* ADMIN PANEL STYLES */
+
+.admin-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.admin-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.admin-input,
+.admin-textarea,
+.admin-file,
+.admin-button,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.admin-input:focus,
+.admin-textarea:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.admin-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-button:hover {
+    background-color: #0056b3;
+}
+
+.admin-button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+.image-preview {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+
+.admin-form hr {
+    border: none;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+.thumbnail-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.thumbnail-preview img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+}
+
+.preview-row img {
+    max-width: 100px;
+    height: auto;
+}
+
+.add-color-btn,
+.submit-btn-admin {
+    border: 1px solid #333;
+    padding: 10px;
+    width: 250px;
+    align-self: center;
+    border-radius: 5px;
+}
+
+.product-grid-admin {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-item-admin {
+    width: 200px;
+    margin: 0 auto;
+}

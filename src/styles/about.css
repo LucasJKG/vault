@@ -1,0 +1,78 @@
+
+
+.vault-about {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.vault-header {
+    margin-bottom: 28px;
+    text-align: left;
+}
+
+.vault-title {
+    font-size: 2.25rem;
+    line-height: 1.05;
+    margin: 0 0 6px 0;
+    font-weight: 800;
+}
+
+.vault-sub {
+    margin: 0;
+    font-size: 0.995rem;
+}
+
+.vault-card {
+    padding: 22px;
+    margin-bottom: 18px;
+}
+
+.vault-card__title {
+    font-size: 1.25rem;
+    margin: 0 0 8px 0;
+}
+
+.vault-card__text {
+    margin: 0 0 10px 0;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.vault-list {
+    margin: 0;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.vault-footer {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.vault-footer__text {
+    margin-bottom: 12px;
+}
+
+.vault-cta {
+    font-weight: 600;
+}
+
+.vault-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .vault-about {
+        padding: 56px 32px;
+    }
+
+    .vault-card {
+        padding: 28px;
+    }
+}

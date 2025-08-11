@@ -1,0 +1,51 @@
+.article-Icon-detail {
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-wrap: wrap;
+    padding: 40px 0;
+    gap: 5rem;
+}
+
+.icon-content-detail img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.icon-content-detail {
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-icon {
+    max-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    text-align: start;
+}
+
+.detail-icon h3,
+.detail-icon p {
+    font-size: 12px;
+}
+
+.show-more-detail {
+    font-size: 10px;
+    text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+    .article-Icon-detail {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

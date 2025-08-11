@@ -1,0 +1,33 @@
+.breadcrumb {
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.breadcrumb-link {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    color: #111827;
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-icon {
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+    margin: 0 4px;
+}
+
+.breadcrumb-current {
+    color: #111827;
+}

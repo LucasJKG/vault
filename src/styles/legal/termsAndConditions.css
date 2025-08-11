@@ -1,0 +1,35 @@
+.terms-conditions-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    color: #222;
+    user-select: text;
+}
+
+.terms-conditions-page h1 {
+    font-size: 26px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+
+.terms-conditions-page ol>li {
+    margin-bottom: 2rem;
+    font-size: 18px;
+}
+
+.terms-conditions-page ol ol>li {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 16px;
+    color: #444;
+}
+
+.terms-conditions-page p {
+    margin: 0.7rem 0 0.7rem 1rem;
+    text-align: start;
+    font-size: 14px;
+    color: #555;
+}

@@ -1,0 +1,35 @@
+.policy-privacy-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.8;
+    color: #222;
+    user-select: text;
+}
+
+.policy-privacy-page h1 {
+    font-size: 26px;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
+
+.policy-privacy-page ol>li {
+    margin-bottom: 2rem;
+    font-size: 18px;
+}
+
+.policy-privacy-page ol ol>li {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 16px;
+    color: #444;
+}
+
+.policy-privacy-page p {
+    margin: 0.7rem 0 0.7rem 1rem;
+    text-align: start;
+    font-size: 14px;
+    color: #555;
+}

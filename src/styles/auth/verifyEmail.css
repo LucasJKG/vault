@@ -1,0 +1,15 @@
+.verify-content {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+
+.verify-content p:last-child{
+    color: orange;
+    font-weight: 600;
+}

@@ -1,0 +1,48 @@
+.product-care-page {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.product-care-page h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+.product-care-page h2 {
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #222;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+}
+
+.product-care-page p, .product-care-page li {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.product-care-page strong {
+    color: #000;
+}
+
+.product-care-page div {
+    margin-top: 30px;
+}
+
+.product-care-page .final-note {
+    margin-top: 30px;
+    padding: 15px;
+    background: #e4e4e4;
+    border-left: 4px solid #292929;
+    border-radius: 4px;
+}

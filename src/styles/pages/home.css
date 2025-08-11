@@ -94,6 +94,7 @@
 .home-container-products {
     display: grid;
     gap: 1rem;
+    margin: 0 14px;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 

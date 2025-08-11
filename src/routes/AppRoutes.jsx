@@ -19,36 +19,66 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import { Profile } from "../auth/Profile";
 import { Account } from "../auth/Account";
 import VerifyEmail from "../pages/VerifyEmail";
+import { useEffect } from "react";
+
+function RouteWithTitle({ title, element }) {
+    useEffect(() => {
+        document.title = title || "Vault";
+    }, [title]);
+
+    return element;
+}
+
+const routes = [
+    { path: "/", element: <Home />, title: "Inicio - Vault" },
+    { path: "/busqueda/:query", element: <Search />, title: "Búsqueda - Vault" },
+    { path: "/productos", element: <Products />, title: "Productos - Vault" },
+    {
+        path: "/admin",
+        element: (
+            <ProtectedRoute>
+                <Admin />
+            </ProtectedRoute>
+        ),
+        title: "Admin - Vault",
+    },
+    {
+        path: "/configuracion",
+        element: (
+            <ProtectedRoute>
+                <Account />
+            </ProtectedRoute>
+        ),
+        title: "Configuración - Vault",
+    },
+    { path: "/verify-email", element: <VerifyEmail />, title: "Verificar Email - Vault" },
+    { path: "/login", element: <Login />, title: "Login - Vault" },
+    { path: "/metodos-de-cambio", element: <Exchanges />, title: "Métodos de Cambio - Vault" },
+    { path: "/metodos-de-pago", element: <PaymentMethods />, title: "Métodos de Pago - Vault" },
+    { path: "/metodos-de-envio", element: <ShippingMethods />, title: "Métodos de Envío - Vault" },
+    { path: "/cuidado-del-producto", element: <ProductCare />, title: "Cuidado del Producto - Vault" },
+    { path: "/contacto", element: <Contact />, title: "Contacto - Vault" },
+    { path: "/sobre-nosotros", element: <About />, title: "Sobre Nosotros - Vault" },
+    { path: "/legal/politica-y-privacidad", element: <PolicyAndPrivacy />, title: "Política y Privacidad - Vault" },
+    { path: "/legal/terminos-y-condiciones", element: <TermsAndConditions />, title: "Términos y Condiciones - Vault" },
+    { path: "/FAQ", element: <FAQ />, title: "Preguntas Frecuentes - Vault" },
+    {
+        path: "/productos/:productId/:productName",
+        element: <ProductDetail />,
+        title: "Detalle del Producto - Vault",
+    },
+];
 
 export default function AppRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/busqueda/:query" element={<Search />} />
-            <Route path="/productos" element={<Products />} />
-            <Route path="/admin" element={
-                <ProtectedRoute>
-                    <Admin />
-                </ProtectedRoute>
-            } />
-            <Route path="/configuracion" element={
-                <ProtectedRoute>
-                    <Account />
-                </ProtectedRoute>
-            } />
-
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/metodos-de-cambio" element={<Exchanges />} />
-            <Route path="/metodos-de-pago" element={<PaymentMethods />} />
-            <Route path="/metodos-de-envio" element={<ShippingMethods />} />
-            <Route path="/cuidado-del-producto" element={<ProductCare />} />
-            <Route path="/contacto" element={<Contact />} />
-            <Route path="/sobre-nosotros" element={<About />} />
-            <Route path="/legal/politica-y-privacidad" element={<PolicyAndPrivacy />} />
-            <Route path="/legal/terminos-y-condiciones" element={<TermsAndConditions />} />
-            <Route path="/FAQ" element={<FAQ />} />
-            <Route path="/productos/:productId/:productName" element={<ProductDetail />} />
+            {routes.map(({ path, element, title }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={<RouteWithTitle title={title} element={element} />}
+                />
+            ))}
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

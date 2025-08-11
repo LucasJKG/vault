@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "../pages/Home";
 import Products from "../pages/Products";
 import About from "../pages/About";
@@ -16,17 +17,15 @@ import Search from "../pages/Search";
 import { NotFound } from "../pages/NotFound";
 import { Login } from "../auth/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { Profile } from "../auth/Profile";
 import { Account } from "../auth/Account";
 import VerifyEmail from "../pages/VerifyEmail";
-import { useEffect } from "react";
 
-function RouteWithTitle({ title, element }) {
+function RouteWithTitle({ title, children }) {
     useEffect(() => {
         document.title = title || "Vault";
     }, [title]);
 
-    return element;
+    return children;
 }
 
 const routes = [
@@ -76,7 +75,11 @@ export default function AppRoutes() {
                 <Route
                     key={path}
                     path={path}
-                    element={<RouteWithTitle title={title} element={element} />}
+                    element={
+                        <RouteWithTitle title={title}>
+                            {element}
+                        </RouteWithTitle>
+                    }
                 />
             ))}
             <Route path="*" element={<NotFound />} />

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { db } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import {
     collection,
     addDoc,
@@ -54,6 +54,11 @@ export const ProductProvider = ({ children }) => {
     };
 
     const deleteProduct = async (id, images = []) => {
+        console.log("Usuario autenticado:", auth.currentUser);
+        if (!auth.currentUser) {
+            alert("Debes iniciar sesión para eliminar productos.");
+            return;
+        }
         try {
             const validImages = images.filter(img => img?.publicId);
 

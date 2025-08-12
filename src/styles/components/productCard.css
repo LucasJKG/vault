@@ -24,11 +24,19 @@
 
 }
 
-.product-name {
+
+
+.product-name h3 {
     font-size: 16px;
     cursor: pointer;
-    color: #868686;
     font-weight: 600;
+}
+
+.product-name p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #868686;
+
 }
 
 .price {

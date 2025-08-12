@@ -47,8 +47,10 @@ const ProductCard = ({ product }) => {
           <span>No hay imágenes</span>
         </div>
       )}
-
-      <h3 className="product-name">{product.model}</h3>
+      <span className="product-name">
+        <h3 >{product.name} </h3>
+        <p >{product.model}</p>
+      </span>
 
       <span className="price">
         <picture className="buy-product">

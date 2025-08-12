@@ -90,7 +90,7 @@ export const Home = () => {
                                 const dateB = new Date(b.createdAt);
                                 return dateB - dateA;
                             })
-                            .slice(0, 12)
+                            .slice(0, 10)
                             .map(product => (
                                 <ProductCard key={product.id} product={product} />
                             ))

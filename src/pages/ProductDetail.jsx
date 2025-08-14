@@ -212,6 +212,15 @@ const ProductDetail = () => {
                             ))}
                     </div>
 
+
+                    <section className="buy-product-info">
+                        <article>
+                            <p>
+                                — Para comprar este producto, información de talles y demás, coordinalo a través de nuestras redes sociales
+                            </p>
+                        </article>
+                    </section>
+
                     <section className="buy-product-detail">
                         <a
                             href={`https://wa.me/${phoneNumber}?text=${encodeURIComponent(

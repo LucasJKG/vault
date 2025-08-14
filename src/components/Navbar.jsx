@@ -116,6 +116,18 @@ export const Navbar = () => {
                         <li>
                             <NavLink to={'/sobre-nosotros'} onClick={toggleMenu}>NOSOTROS</NavLink>
                         </li>
+                        <li>
+                            <NavLink to={'/contacto'} onClick={toggleMenu}>CONTACTO</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/FAQ'} onClick={toggleMenu}>FAQ</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/metodos-de-envio'} onClick={toggleMenu}>ENVIOS</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/metodos-de-pago'} onClick={toggleMenu}>PAGOS</NavLink>
+                        </li>
                         {user?.role === "admin" && (
                             <li>
                                 <NavLink to="/admin" onClick={toggleMenu}>ADMIN</NavLink>

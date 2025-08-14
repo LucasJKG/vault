@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
@@ -8,7 +8,9 @@ import ProductCard from "../components/ProductCard";
 import ZoomableImage from "../components/ZoomableImage";
 
 const ProductDetail = () => {
-    const { productId } = useParams();
+    const { productId, productName } = useParams();
+    const navigate = useNavigate();
+
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [selectedColor, setSelectedColor] = useState(null);
@@ -16,6 +18,7 @@ const ProductDetail = () => {
     const [activeDropdown, setActiveDropdown] = useState(null);
     const [mainImageIndex, setMainImageIndex] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+    const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
 
     const contentRefs = {
         modelo: useRef(null),
@@ -32,7 +35,6 @@ const ProductDetail = () => {
     const toggleDropdown = (name) => {
         setActiveDropdown(prev => (prev === name ? null : name));
     };
-
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -81,6 +83,23 @@ const ProductDetail = () => {
         });
     }, [productId]);
 
+    useEffect(() => {
+        if (productName && product) {
+            const parts = productName.split("-");
+            const colorFromSlug = parts[parts.length - 1];
+            const matchingColor = Object.keys(product.colors).find(
+                (c) => c.toLowerCase().replace(/\s+/g, "-") === colorFromSlug
+            );
+            if (matchingColor) {
+                setSelectedColor(matchingColor);
+            }
+        }
+    }, [productName, product]);
+
+    useEffect(() => {
+        setImagesLoadedCount(0);
+    }, [selectedColor]);
+
     if (!product) return <Loader />;
 
     const imagesForColor =
@@ -93,7 +112,18 @@ const ProductDetail = () => {
 
     const handleSizeGuide = () => {
         setSize(!size);
-    }
+    };
+
+    const handleColorChange = (colorKey) => {
+        setSelectedColor(colorKey);
+        const urlFriendlyName = product.name.toLowerCase().replace(/\s+/g, "-");
+        const urlFriendlyColor = colorKey.toLowerCase().replace(/\s+/g, "-");
+
+        window.location.href = `/productos/${productId}/${urlFriendlyName}-${urlFriendlyColor}`;
+    };
+
+
+
 
     return (
         <>
@@ -110,6 +140,7 @@ const ProductDetail = () => {
                                 <div className="thumbnails-container">
                                     {imagesForColor.map((img, index) => (
                                         <img
+                                            loading="lazy"
                                             key={index}
                                             src={img.url}
                                             alt={`${product.name} ${selectedColor} miniatura ${index + 1}`}
@@ -138,6 +169,12 @@ const ProductDetail = () => {
                 <div className="product-info">
                     <h1>{product.name} {product.model}</h1>
 
+                    {selectedColor && (
+                        <p className="selected-color">
+                            Modelo - {selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1).toLowerCase()}
+                        </p>
+                    )}
+
                     <section className="product-price">
                         {product.discount ? (
                             <>
@@ -152,28 +189,26 @@ const ProductDetail = () => {
                         )}
                     </section>
                     {product.discount ? (
-                        <>
-                            <p className="product-installments">
-                                3 cuotas sin interés: ${pricePerInstallment}
-                            </p>
-                        </>
+                        <p className="product-installments">
+                            3 cuotas sin interés: ${pricePerInstallment}
+                        </p>
                     ) : (
                         <p className="product-installments">
                             3 cuotas sin interés: ${totalDesdeInstallments}
                         </p>
                     )}
+
                     <div className="color-selector-product">
                         {product.colors &&
                             Object.keys(product.colors).map((colorKey) => (
                                 <button
                                     key={colorKey}
-                                    onClick={() => setSelectedColor(colorKey)}
+                                    onClick={() => handleColorChange(colorKey)}
                                     style={{
                                         backgroundColor: product.colors[colorKey].hex,
                                     }}
                                     aria-label={`Seleccionar color ${colorKey}`}
-                                >
-                                </button>
+                                />
                             ))}
                     </div>
 
@@ -208,7 +243,8 @@ const ProductDetail = () => {
                                 </button>
                                 <img src="/talles/size-guide.jpeg" alt="Size Guide" />
                             </div>
-                        </div>)}
+                        </div>
+                    )}
 
                     <div className={`size-guide ${size ? 'active' : 'inactive'}`} onClick={handleSizeGuide}>
                         <img src="/talles/size.png" alt="Icon Size" height={20} />
@@ -250,7 +286,6 @@ const ProductDetail = () => {
                     </section>
 
                     <section className="social-media">
-
                         <p>Contáctanos por nuestras redes sociales:</p>
                         <div className="social-icons-container">
                             <a href="https://www.instagram.com/vault.store/" target="_blank" rel="noopener noreferrer">
@@ -260,11 +295,10 @@ const ProductDetail = () => {
                                 <img src="/social-icon/whatsapp.png" alt="WhatsApp" height={30} />
                             </a>
                         </div>
-
                     </section>
-
                 </div>
             </div>
+
             {relatedProducts.length > 0 && (
                 <section className="related-products">
                     <h2>Productos relacionados</h2>
@@ -283,7 +317,6 @@ const ProductDetail = () => {
                     </Link>
                 </article>
             </section>
-
         </>
     );
 };

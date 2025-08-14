@@ -42,21 +42,44 @@ const Products = () => {
         fetchProducts();
     }, []);
 
-    const uniqueBrands = [...new Set(products.map(p => p.brand))].filter(Boolean);
-    const uniqueModels = [...new Set(products.map(p => p.model))].filter(Boolean);
-    const uniqueColors = Array.from(
+    // Filtros dinámicos
+    const uniqueBrands = Array.from(new Set(products.map(p => p.brand))).filter(Boolean);
+
+    const uniqueModels = Array.from(
         new Set(
-            products.flatMap(p => p.colors ? Object.keys(p.colors) : [])
+            selectedBrands.length === 0
+                ? products.map(p => p.model)
+                : products.filter(p => selectedBrands.includes(p.brand)).map(p => p.model)
         )
+    ).filter(Boolean);
+
+    const productsForColors = products.filter(p => {
+        const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(p.brand);
+        const modelMatch = selectedModels.length === 0 || selectedModels.includes(p.model);
+        return brandMatch && modelMatch;
+    });
+
+    const uniqueColors = Array.from(
+        new Set(productsForColors.flatMap(p => (p.colors ? Object.keys(p.colors) : [])))
     ).filter(Boolean);
 
     const toggleSelection = (type, value) => {
         let selectedArray, setSelectedArray;
         switch (type) {
-            case 'brand': selectedArray = selectedBrands; setSelectedArray = setSelectedBrands; break;
-            case 'model': selectedArray = selectedModels; setSelectedArray = setSelectedModels; break;
-            case 'color': selectedArray = selectedColors; setSelectedArray = setSelectedColors; break;
-            default: return;
+            case 'brand':
+                selectedArray = selectedBrands;
+                setSelectedArray = setSelectedBrands;
+                break;
+            case 'model':
+                selectedArray = selectedModels;
+                setSelectedArray = setSelectedModels;
+                break;
+            case 'color':
+                selectedArray = selectedColors;
+                setSelectedArray = setSelectedColors;
+                break;
+            default:
+                return;
         }
 
         if (type === 'color') {
@@ -73,7 +96,6 @@ const Products = () => {
             }
         }
     };
-
 
     const clearFilters = () => {
         setSelectedBrands([]);
@@ -125,32 +147,22 @@ const Products = () => {
         });
     };
 
-    const rotateImageBrand = () => {
-        setRotateImgBrand(prev => !prev);
-    }
-    const rotateImageModel = () => {
-        setRotateImgModel(prev => !prev);
-    }
-    const rotateImageColor = () => {
-        setRotateImgColor(prev => !prev);
-    }
+    const rotateImageBrand = () => setRotateImgBrand(prev => !prev);
+    const rotateImageModel = () => setRotateImgModel(prev => !prev);
+    const rotateImageColor = () => setRotateImgColor(prev => !prev);
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.innerHeight + window.scrollY;
             const threshold = document.body.offsetHeight - 200;
             if (scrollPosition >= threshold) {
-                setVisibleCount(prev => {
-                    if (prev >= sortedProducts.length) return prev;
-                    return prev + 4; 
-                });
+                setVisibleCount(prev => (prev >= sortedProducts.length ? prev : prev + 4));
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [sortedProducts.length]);
-
 
     return (
         <section>
@@ -196,12 +208,22 @@ const Products = () => {
                             rotateImageBrand();
                         }}
                     >
-                        <p>
+                        <span className='filter-title-content'>
                             Marca
                             {selectedBrands.length > 0 && (
-                                <span className="filter-count"> ( {selectedBrands.length} )</span>
+                                <span className="filter-count">
+                                    <p>
+                                        ( {selectedBrands.length} )
+                                    </p>
+                                    <button
+                                        className="clear-single-filter"
+                                        onClick={() => setSelectedBrands([])}
+                                    >
+                                        Limpiar x
+                                    </button>
+                                </span>
                             )}
-                        </p>
+                        </span>
                         <img src="/flecha-abajo.png" alt="Flecha Dropdown" height={20} />
                     </span>
 
@@ -219,6 +241,7 @@ const Products = () => {
                     </div>
                 </div>
 
+
                 <div className={`filter-group ${modelOpen ? 'active' : ''}`}>
                     <span
                         className={`filter-dropdown ${rotateImgModel ? 'active' : 'inactive'}`}
@@ -227,12 +250,22 @@ const Products = () => {
                             rotateImageModel();
                         }}
                     >
-                        <p>
+                        <span className='filter-title-content'>
                             Modelo
                             {selectedModels.length > 0 && (
-                                <span className="filter-count"> ( {selectedModels.length} )</span>
+                                <span className="filter-count">
+                                    <p>
+                                        ( {selectedModels.length} )
+                                    </p>
+                                    <button
+                                        className="clear-single-filter"
+                                        onClick={() => setSelectedModels([])}
+                                    >
+                                        Limpiar x
+                                    </button>
+                                </span>
                             )}
-                        </p>
+                        </span>
                         <img src="/flecha-abajo.png" alt="Flecha Dropdown" height={20} />
                     </span>
 
@@ -258,12 +291,22 @@ const Products = () => {
                             rotateImageColor();
                         }}
                     >
-                        <p>
+                        <span className='filter-title-content'>
                             Color
                             {selectedColors.length > 0 && (
-                                <span className="filter-count"> ( {selectedColors.length} )</span>
+                                <span className="filter-count">
+                                    <p>
+                                        ( {selectedColors.length} )
+                                    </p>
+                                    <button
+                                        className="clear-single-filter"
+                                        onClick={() => setSelectedColors([])}
+                                    >
+                                        Limpiar x
+                                    </button>
+                                </span>
                             )}
-                        </p>
+                        </span>
                         <img src="/flecha-abajo.png" alt="Flecha Dropdown" height={20} />
                     </span>
 
@@ -346,9 +389,13 @@ const Products = () => {
 
             <div className="product-list">
                 {sortedProducts.slice(0, visibleCount).map(product => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard
+                        key={product.id}
+                        product={{ ...product, selectedColor: selectedColors[0] || null }}
+                    />
                 ))}
             </div>
+
         </section >
     );
 };

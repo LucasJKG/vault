@@ -23,13 +23,27 @@ const ProductCard = ({ product }) => {
   const hoverImage = images[1]?.url || null;
 
   const urlFriendlyName = product.name.toLowerCase().replace(/\s+/g, '-');
-  const productLink = `/productos/${product.id}/${urlFriendlyName}`;
+
+  const formattedColorName =
+    activeColor.charAt(0).toUpperCase() + activeColor.slice(1).toLowerCase();
+
+  const urlFriendlyColor = activeColor.toLowerCase().replace(/\s+/g, '-');
+
+  const productLink = `/productos/${product.id}/${urlFriendlyName}-${urlFriendlyColor}`;
 
   const onColorClick = (e, colorName) => {
     e.stopPropagation();
     e.preventDefault();
     setActiveColor(colorName);
   };
+
+
+  useEffect(() => {
+    if (product.selectedColor && product.colors[product.selectedColor]) {
+      setActiveColor(product.selectedColor);
+    }
+  }, [product.selectedColor, product.colors]);
+
 
   return (
     <Link to={productLink} className="product-card" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -47,9 +61,10 @@ const ProductCard = ({ product }) => {
           <span>No hay imágenes</span>
         </div>
       )}
+
       <span className="product-name">
-        <h3 >{product.name} </h3>
-        <p >{product.model}</p>
+        <h3>{product.name}</h3>
+        <p>{product.model} - {formattedColorName}</p>
       </span>
 
       <span className="price">

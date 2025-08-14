@@ -310,6 +310,24 @@
     font-weight: 500;
     color: #666;
     margin-left: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clear-single-filter {
+    background: #808080;
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.filter-title-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -330,7 +348,8 @@
     .product-list {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     }
-    .product-banner{
+
+    .product-banner {
         display: none;
     }
 

@@ -20,6 +20,19 @@
     justify-content: center;
 }
 
+.images-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.product-images {
+    position: relative;
+}
+
+
 @media (max-width: 1024px) {
     .product-images {
         max-width: 600px;
@@ -202,7 +215,7 @@
 
 .price-no-discount p:last-child {
     font-size: 16px;
-    color: #858585;
+    color: #ff4b4b;
     font-weight: 500;
 }
 

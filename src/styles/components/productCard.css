@@ -51,7 +51,7 @@
     padding: 5px 0;
     font-size: 14px;
     font-weight: 500;
-    color: #868686;
+    color: #ff4b4b;
 }
 
 
@@ -131,4 +131,32 @@
     max-width: 100%;
     max-height: 500px;
     object-fit: cover;
+}
+
+@media (max-width: 480px) {
+    .product-name h3 {
+        font-size: 14px;
+    }
+
+    .buy-product {
+        font-size: 14px;
+    }
+
+
+    .price p:last-child {
+        padding: 5px 0;
+        font-size: 12px;
+    }
+
+}
+
+
+@media (max-width: 380px) {
+    .product-name h3 {
+        font-size: 12px;
+    }
+
+    .product-name p {
+        font-size: 12px;
+    }
 }

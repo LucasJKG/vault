@@ -4,7 +4,7 @@ import imageCompression from "browser-image-compression";
 import { useProducts } from "../context/ProductContext";
 import ProductCard from "../components/ProductCard";
 import "../styles/pages/admin.css";
-import { Loader } from '../components/Loader'
+import { Loader } from '../components/Loader';
 import useAdmin from "../hooks/useAdmin";
 
 const getOptimizedImageUrl = (url) => {
@@ -14,7 +14,7 @@ const getOptimizedImageUrl = (url) => {
 
 const Admin = () => {
     const isAdmin = useAdmin();
-    const { products, addProduct, deleteProduct } = useProducts();
+    const { products, addProduct, editProduct, deleteProduct } = useProducts();
 
     const [name, setName] = useState("");
     const [brand, setBrand] = useState("");
@@ -27,6 +27,7 @@ const Admin = () => {
     const [colors, setColors] = useState({});
     const [imageFiles, setImageFiles] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [editingId, setEditingId] = useState(null); // ✅ nuevo estado
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files).slice(0, 4);
@@ -85,26 +86,51 @@ const Admin = () => {
                 description,
                 discount: numericDiscount > 0 ? numericDiscount : null,
                 finalPrice: numericDiscount > 0 ? finalPrice : numericPrice,
-                createdAt: new Date(),
+                updatedAt: new Date(),
             };
 
-            await addProduct(productData);
-            alert("✅ Producto agregado exitosamente");
+            if (editingId) {
+                // ✅ Editar producto existente
+                await editProduct(editingId, productData);
+                alert("✅ Producto actualizado correctamente");
+            } else {
+                // ✅ Crear nuevo producto
+                await addProduct({ ...productData, createdAt: new Date() });
+                alert("✅ Producto agregado exitosamente");
+            }
 
-            setName("");
-            setBrand("");
-            setModel("");
-            setPrice("");
-            setDiscount("");
-            setDescription("");
-            setColors({});
-            setSelectedColor("");
-            setColorHex("#000000");
+            resetForm();
         } catch (error) {
             console.error(error);
-            alert("❌ Error al agregar producto");
+            alert("❌ Error al guardar producto");
         }
         setLoading(false);
+    };
+
+    const resetForm = () => {
+        setName("");
+        setBrand("");
+        setModel("");
+        setPrice("");
+        setDiscount("");
+        setDescription("");
+        setColors({});
+        setSelectedColor("");
+        setColorHex("#000000");
+        setEditingId(null);
+    };
+
+    const handleEditClick = (product) => {
+        // ✅ Cargar datos en el formulario
+        setEditingId(product.id);
+        setName(product.name);
+        setBrand(product.brand);
+        setModel(product.model);
+        setPrice(product.price);
+        setDiscount(product.discount || "");
+        setDescription(product.description);
+        setColors(product.colors || {});
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const sortedProducts = [...products].sort((a, b) =>
@@ -117,9 +143,8 @@ const Admin = () => {
         <>
             <div className="admin-container">
                 <form className="admin-form" onSubmit={handleSubmit}>
-                    <h2>Agregar Nuevo Producto</h2>
+                    <h2>{editingId ? "Editar Producto" : "Agregar Nuevo Producto"}</h2>
                     <input
-                        id="name-admin"
                         type="text"
                         placeholder="Nombre"
                         value={name}
@@ -127,7 +152,6 @@ const Admin = () => {
                         required
                     />
                     <input
-                        id="brand-admin"
                         type="text"
                         placeholder="Marca"
                         value={brand}
@@ -135,7 +159,6 @@ const Admin = () => {
                         required
                     />
                     <input
-                        id="model-admin"
                         type="text"
                         placeholder="Modelo"
                         value={model}
@@ -143,7 +166,6 @@ const Admin = () => {
                         required
                     />
                     <input
-                        id="price-admin"
                         type="number"
                         placeholder="Precio"
                         value={price}
@@ -151,14 +173,12 @@ const Admin = () => {
                         required
                     />
                     <input
-                        id="discount-admin"
                         type="number"
                         placeholder="Descuento (opcional)"
                         value={discount}
                         onChange={(e) => setDiscount(e.target.value)}
                     />
                     <textarea
-                        id="description-admin"
                         placeholder="Descripción"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -167,20 +187,17 @@ const Admin = () => {
 
                     <hr />
                     <input
-                        id="text-color"
                         type="text"
                         placeholder="Color o variante"
                         value={selectedColor}
                         onChange={(e) => setSelectedColor(e.target.value)}
                     />
                     <input
-                        id="color-hex"
                         type="color"
                         value={colorHex}
                         onChange={(e) => setColorHex(e.target.value)}
                     />
                     <input
-                        id="image-upload"
                         type="file"
                         multiple
                         accept="image/*"
@@ -215,8 +232,22 @@ const Admin = () => {
                     </section>
 
                     <button type="submit" disabled={loading} className="submit-btn-admin">
-                        {loading ? "Guardando..." : "Agregar Producto"}
+                        {loading
+                            ? "Guardando..."
+                            : editingId
+                            ? "Guardar Cambios"
+                            : "Agregar Producto"}
                     </button>
+
+                    {editingId && (
+                        <button
+                            type="button"
+                            onClick={resetForm}
+                            className="cancel-btn-admin"
+                        >
+                            Cancelar edición
+                        </button>
+                    )}
                 </form>
             </div>
 
@@ -226,17 +257,25 @@ const Admin = () => {
                     {sortedProducts.map((product) => (
                         <div key={product.id} className="product-item-admin">
                             <ProductCard product={product} />
-                            <button
-                                className="delete-btn"
-                                onClick={() => {
-                                    const allImages = Object.values(product.colors || {}).flatMap(
-                                        (color) => color.images || []
-                                    );
-                                    deleteProduct(product.id, allImages);
-                                }}
-                            >
-                                Eliminar
-                            </button>
+                            <div className="admin-btns">
+                                <button
+                                    className="edit-btn"
+                                    onClick={() => handleEditClick(product)}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    className="delete-btn"
+                                    onClick={() => {
+                                        const allImages = Object.values(product.colors || {}).flatMap(
+                                            (color) => color.images || []
+                                        );
+                                        deleteProduct(product.id, allImages);
+                                    }}
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>

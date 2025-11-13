@@ -132,3 +132,23 @@ select:focus {
     width: 200px;
     margin: 0 auto;
 }
+
+.admin-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.delete-btn,
+.edit-btn {
+    margin: 5px;
+    padding: 4px 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+.delete-btn:hover,
+.edit-btn:hover {
+    background: #ccc;
+}

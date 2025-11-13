@@ -23,7 +23,6 @@ const ZoomableImage = ({ src, alt = "", zoom = 2, className = "" }) => {
         const container = containerRef.current;
         if (!container) return;
 
-        // Listener manual para touchmove con passive: false
         container.addEventListener("touchmove", handleTouchMove, { passive: false });
 
         return () => {
@@ -86,7 +85,6 @@ const ZoomableImage = ({ src, alt = "", zoom = 2, className = "" }) => {
         setTransformRAF({ scale: zoom, x: startTranslateX, y: startTranslateY });
     };
 
-    // Nota: handleTouchMove ya no se pasa en JSX, sino se añade manualmente
     const handleTouchMove = (e) => {
         if (!isTouchRef.current) return;
         if (e.touches.length > 1) return;

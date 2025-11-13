@@ -33,7 +33,7 @@ export const Home = () => {
                     <picture className='banner'>
                         <article className='banner-image'>
                             <Link to="/productos">
-                                <img src="/home-images/banner-1.jpeg" alt="Banner oferta" />
+                                <img src="/home-images/banner-navidad.jpg" alt="Banner oferta" />
                             </Link>
                         </article>
                     </picture>

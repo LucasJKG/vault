@@ -167,7 +167,7 @@ const Products = () => {
     return (
         <section>
             <picture className="product-banner">
-                <img src="/product/banner-product.jpeg" alt="Banner Producto" />
+                <img src="/product/banner-product.jpg" alt="Banner Producto" />
             </picture>
 
             <aside className="product-aside">
